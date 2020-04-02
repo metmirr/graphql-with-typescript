@@ -9,6 +9,12 @@ export class AuthorResolver {
     return Author.find();
   }
 
+  @Query(() => Author, { nullable: true })
+  getAuthorByEmail(@Arg("email") email: string) {
+    const author = Author.findOne({ email: email });
+    return author;
+  }
+
   // @Mutation(() => Author)
   // async createAuthor(@Arg("data") data: CreateAuthor) {
   //   const author = Author.create(data);
