@@ -4,25 +4,25 @@ import { CreateAuthor } from "../inputs/CreateAuthor";
 
 @Resolver()
 export class AuthorResolver {
-  @Query(() => [Author])
+  @Query(returns => [Author])
   authors() {
     return Author.find();
   }
 
-  @Query(() => Author, { nullable: true })
+  @Query(returns => Author, { nullable: true })
   getAuthorByEmail(@Arg("email") email: string) {
     const author = Author.findOne({ email: email });
     return author;
   }
 
-  // @Mutation(() => Author)
+  // @Mutation(returns => Author)
   // async createAuthor(@Arg("data") data: CreateAuthor) {
   //   const author = Author.create(data);
   //   await author.save();
   //   return author;
   // }
 
-  @Mutation(() => Author)
+  @Mutation(returns => Author)
   async createAuthor(
     @Arg("email") email: string,
     @Arg("firstname") firstname: string,

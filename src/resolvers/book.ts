@@ -4,12 +4,12 @@ import { CreateBook } from "../inputs/CreateBook";
 
 @Resolver()
 export class BookResolver {
-  @Query(() => [Book])
+  @Query(returns => [Book])
   books() {
     return Book.find();
   }
 
-  @Mutation(() => Book)
+  @Mutation(returns => Book)
   async createBook(@Arg("data") data: CreateBook) {
     const book = Book.create(data);
     await book.save();
