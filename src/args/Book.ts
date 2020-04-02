@@ -9,4 +9,7 @@ export class GetBookArgs {
   @Field(type => Int, { nullable: true })
   @Max(25, { message: "Can not take more than 25 at once" })
   take?: number;
+
+  @Field(type => String, { nullable: true })
+  title?: string;
 }

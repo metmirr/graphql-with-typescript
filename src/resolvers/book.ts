@@ -6,8 +6,11 @@ import { GetBookArgs } from "../args/Book";
 @Resolver()
 export class BookResolver {
   @Query(returns => [Book])
-  books(@Args() { skip, take }: GetBookArgs) {
-    return Book.find({ skip: skip, take: take });
+  books(@Args() { skip, take, title }: GetBookArgs) {
+    if (title) {
+      return Book.find({ where: { title } });
+    }
+    return Book.find({ skip, take });
   }
 
   @Mutation(returns => Book)
