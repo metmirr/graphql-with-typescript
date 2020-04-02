@@ -10,12 +10,10 @@ import {
   Root
 } from "type-graphql";
 
-import { Book } from "../entities/Book";
-import { CreateBook } from "../inputs/CreateBook";
-import { GetBookArgs } from "../args/Book";
-import { NewNotificationArgs } from "../args/Notification";
-import { NotificationPayload, Notification } from "../notifications/book";
-import { Topics } from "../notifications/topics";
+import { Book } from "../entities";
+import { CreateBookInput } from "../inputs";
+import { GetBookArgs, NewNotificationArgs } from "../args";
+import { NotificationPayload, Notification, Topics } from "../notifications";
 
 @Resolver(of => Book)
 export class BookResolver {
@@ -29,7 +27,7 @@ export class BookResolver {
 
   @Mutation(returns => Book)
   async createBook(
-    @Arg("data") data: CreateBook,
+    @Arg("data") data: CreateBookInput,
     @PubSub() pubSub: PubSubEngine
   ) {
     const book = Book.create(data);

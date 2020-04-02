@@ -6,7 +6,7 @@ import { Book } from "../entities/Book";
  * Ensure we don't accidentally change the property type by using Partial
  */
 @InputType()
-export class CreateBook implements Partial<Book> {
+export class CreateBookInput implements Partial<Book> {
   @Field()
   title: string;
 

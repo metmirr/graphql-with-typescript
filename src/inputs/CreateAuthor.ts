@@ -6,7 +6,7 @@ import { Author } from "../entities/Author";
  * Ensure we don't accidentally change the property type by using Partial
  */
 @InputType()
-export class CreateAuthor implements Partial<Author> {
+export class CreateAuthorInput implements Partial<Author> {
   @Field()
   email: string;
 

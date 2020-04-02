@@ -1,7 +1,8 @@
 import { Resolver, Query, Mutation, Arg, Args } from "type-graphql";
-import { Author } from "../entities/Author";
-import { CreateAuthor } from "../inputs/CreateAuthor";
-import { GetAuthorArgs } from "../args/Author";
+
+import { Author } from "../entities";
+import { CreateAuthorInput } from "../inputs";
+import { GetAuthorArgs } from "../args";
 
 @Resolver(of => Author)
 export class AuthorResolver {
@@ -14,7 +15,7 @@ export class AuthorResolver {
   }
 
   @Mutation(returns => Author)
-  async createAuthor(@Arg("data") data: CreateAuthor) {
+  async createAuthor(@Arg("data") data: CreateAuthorInput) {
     const author = Author.create(data);
     await author.save();
     return author;
