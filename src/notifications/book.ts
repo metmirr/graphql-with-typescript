@@ -3,7 +3,7 @@ import { ObjectType, Field, ID } from "type-graphql";
 @ObjectType()
 export class Notification {
   @Field(type => ID)
-  id: number;
+  id: string;
 
   @Field({ nullable: true })
   message?: string;

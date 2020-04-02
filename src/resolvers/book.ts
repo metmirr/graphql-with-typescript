@@ -5,12 +5,17 @@ import {
   Arg,
   Args,
   PubSub,
-  PubSubEngine
+  PubSubEngine,
+  Subscription,
+  Root
 } from "type-graphql";
+
 import { Book } from "../entities/Book";
 import { CreateBook } from "../inputs/CreateBook";
 import { GetBookArgs } from "../args/Book";
-import { NotificationPayload } from "../notifications/book";
+import { NewNotificationArgs } from "../args/Notification";
+import { NotificationPayload, Notification } from "../notifications/book";
+import { Topics } from "../notifications/topics";
 
 @Resolver(of => Book)
 export class BookResolver {
@@ -34,8 +39,21 @@ export class BookResolver {
       id: book.id,
       message: `A new book published! The book has ${book.title} title`
     };
-    await pubSub.publish("NOTIFICATIONS", payload);
+    await pubSub.publish(Topics.NEWBOOKPUBLISHED, payload);
 
     return book;
+  }
+
+  @Subscription({
+    topics: Topics.NEWBOOKPUBLISHED
+  })
+  newNotification(
+    @Root() notifPayload: NotificationPayload,
+    @Args() { id, message }: NewNotificationArgs
+  ): Notification {
+    return {
+      ...notifPayload,
+      date: new Date()
+    };
   }
 }
