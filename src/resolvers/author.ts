@@ -6,14 +6,11 @@ import { GetAuthorArgs } from "../args/Author";
 @Resolver()
 export class AuthorResolver {
   @Query(returns => [Author])
-  authors(@Args() { skip, take }: GetAuthorArgs) {
-    return Author.find({ skip: skip, take: take });
-  }
-
-  @Query(returns => Author, { nullable: true })
-  getAuthorByEmail(@Arg("email") email: string) {
-    const author = Author.findOne({ email: email });
-    return author;
+  authors(@Args() { skip, take, email }: GetAuthorArgs) {
+    if (email) {
+      return Author.find({ email });
+    }
+    return Author.find({ skip, take });
   }
 
   @Mutation(returns => Author)

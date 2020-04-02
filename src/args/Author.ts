@@ -9,4 +9,7 @@ export class GetAuthorArgs {
   @Field(type => Int, { nullable: true })
   @Max(25, { message: "Can not take more than 25 at once" })
   take?: number;
+
+  @Field(type => String)
+  email?: string;
 }
