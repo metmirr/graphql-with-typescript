@@ -11,7 +11,7 @@ import {
 } from "type-graphql";
 
 import { Book } from "../entities";
-import { CreateBookInput } from "../inputs";
+import { CreateBookInput, UpdateBookInput } from "../inputs";
 import { GetBookArgs, NewNotificationArgs } from "../args";
 import { NotificationPayload, Notification, Topics } from "../notifications";
 
@@ -39,6 +39,15 @@ export class BookResolver {
     };
     await pubSub.publish(Topics.NEWBOOKPUBLISHED, payload);
 
+    return book;
+  }
+
+  @Mutation(returns => Book)
+  async updateBook(@Arg("id") id: string, @Arg("data") data: UpdateBookInput) {
+    const book = await Book.findOne({ where: { id } });
+    if (!book) throw new Error("Book not found!");
+    Object.assign(book, data);
+    await book.save();
     return book;
   }
 
