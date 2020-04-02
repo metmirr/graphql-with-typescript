@@ -1,12 +1,13 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Args } from "type-graphql";
 import { Author } from "../entities/Author";
 import { CreateAuthor } from "../inputs/CreateAuthor";
+import { GetAuthorArgs } from "../args/Author";
 
 @Resolver()
 export class AuthorResolver {
   @Query(returns => [Author])
-  authors() {
-    return Author.find();
+  authors(@Args() { skip, take }: GetAuthorArgs) {
+    return Author.find({ skip: skip, take: take });
   }
 
   @Query(returns => Author, { nullable: true })

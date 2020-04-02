@@ -1,12 +1,13 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Args } from "type-graphql";
 import { Book } from "../entities/Book";
 import { CreateBook } from "../inputs/CreateBook";
+import { GetBookArgs } from "../args/Book";
 
 @Resolver()
 export class BookResolver {
   @Query(returns => [Book])
-  books() {
-    return Book.find();
+  books(@Args() { skip, take }: GetBookArgs) {
+    return Book.find({ skip: skip, take: take });
   }
 
   @Mutation(returns => Book)
