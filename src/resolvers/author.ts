@@ -15,20 +15,9 @@ export class AuthorResolver {
     return author;
   }
 
-  // @Mutation(returns => Author)
-  // async createAuthor(@Arg("data") data: CreateAuthor) {
-  //   const author = Author.create(data);
-  //   await author.save();
-  //   return author;
-  // }
-
   @Mutation(returns => Author)
-  async createAuthor(
-    @Arg("email") email: string,
-    @Arg("firstname") firstname: string,
-    @Arg("lastname") lastname: string
-  ) {
-    const author = Author.create({ email, firstname, lastname });
+  async createAuthor(@Arg("data") data: CreateAuthor) {
+    const author = Author.create(data);
     await author.save();
     return author;
   }
