@@ -3,7 +3,7 @@ import { Author } from "../entities/Author";
 import { CreateAuthor } from "../inputs/CreateAuthor";
 import { GetAuthorArgs } from "../args/Author";
 
-@Resolver()
+@Resolver(of => Author)
 export class AuthorResolver {
   @Query(returns => [Author])
   authors(@Args() { skip, take, email }: GetAuthorArgs) {

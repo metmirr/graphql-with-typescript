@@ -3,7 +3,7 @@ import { Book } from "../entities/Book";
 import { CreateBook } from "../inputs/CreateBook";
 import { GetBookArgs } from "../args/Book";
 
-@Resolver()
+@Resolver(of => Book)
 export class BookResolver {
   @Query(returns => [Book])
   books(@Args() { skip, take, title }: GetBookArgs) {
