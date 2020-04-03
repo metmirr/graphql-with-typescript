@@ -1,5 +1,5 @@
 import { InputType, Field } from "type-graphql";
-import { Book } from "../entities";
+import { Book, Author } from "../entities";
 
 @InputType()
 export class UpdateBookInput implements Partial<Book> {
@@ -7,7 +7,7 @@ export class UpdateBookInput implements Partial<Book> {
   title?: string;
 
   @Field({ nullable: true })
-  author?: string;
+  authorid: number;
 
   @Field({ nullable: true })
   isPublished?: boolean;
