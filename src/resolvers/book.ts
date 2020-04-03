@@ -46,6 +46,7 @@ export class BookResolver {
   async updateBook(@Arg("id") id: string, @Arg("data") data: UpdateBookInput) {
     const book = await Book.findOne({ where: { id } });
     if (!book) throw new Error("Book not found!");
+
     Object.assign(book, data);
     await book.save();
     return book;
@@ -54,10 +55,7 @@ export class BookResolver {
   @Subscription({
     topics: Topics.NEWBOOKPUBLISHED
   })
-  newNotification(
-    @Root() notifPayload: NotificationPayload,
-    @Args() { id, message }: NewNotificationArgs
-  ): Notification {
+  newNotification(@Root() notifPayload: NotificationPayload): Notification {
     return {
       ...notifPayload,
       date: new Date()
