@@ -7,11 +7,14 @@ import { GetAuthorArgs } from "../args";
 @Resolver(of => Author)
 export class AuthorResolver {
   @Query(returns => [Author])
-  authors(@Args() { skip, take, email }: GetAuthorArgs) {
+  async authors(@Args() { skip, take, email }: GetAuthorArgs) {
     if (email) {
-      return Author.find({ email });
+      return await Author.find({
+        where: { email: email },
+        relations: ["books"]
+      });
     }
-    return Author.find({ skip, take });
+    return await Author.find({ skip, take, relations: ["books"] });
   }
 
   @Mutation(returns => Author)
