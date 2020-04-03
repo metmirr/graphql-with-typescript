@@ -11,5 +11,5 @@ export class CreateBookInput implements Partial<Book> {
   title: string;
 
   @Field()
-  author: string;
+  authorid: number;
 }

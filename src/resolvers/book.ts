@@ -30,7 +30,11 @@ export class BookResolver {
     @Arg("data") data: CreateBookInput,
     @PubSub() pubSub: PubSubEngine
   ) {
+    const author = await Author.findOne({ where: { id: data.authorid } });
+    if (!author) throw new Error("Author not found!");
+
     const book = Book.create(data);
+    book.author = author;
     await book.save();
 
     const payload: NotificationPayload = {
