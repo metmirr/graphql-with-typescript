@@ -10,19 +10,19 @@ import {
   Root
 } from "type-graphql";
 
-import { Book } from "../entities";
+import { Book, Author } from "../entities";
 import { CreateBookInput, UpdateBookInput } from "../inputs";
-import { GetBookArgs, NewNotificationArgs } from "../args";
+import { GetBookArgs } from "../args";
 import { NotificationPayload, Notification, Topics } from "../notifications";
 
 @Resolver(of => Book)
 export class BookResolver {
   @Query(returns => [Book])
-  books(@Args() { skip, take, title }: GetBookArgs) {
+  async books(@Args() { skip, take, title }: GetBookArgs) {
     if (title) {
-      return Book.find({ where: { title } });
+      return await Book.find({ where: { title }, relations: ["author"] });
     }
-    return Book.find({ skip, take });
+    return await Book.find({ skip, take, relations: ["author"] });
   }
 
   @Mutation(returns => Book)
